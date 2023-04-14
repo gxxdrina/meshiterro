@@ -3,12 +3,11 @@ Rails.application.routes.draw do
   root to: "homes#top"
   get 'homes/about', as: :about #名前付きルートをaboutにする
 
-  resources :post_images, only: [:new, :create, :index, :show, :destroy]
-  #get 'post_images/new'
-  #post 'post_images/create'
-  #get 'post_images/index'
-  #get 'post_images/show'
-
-  resources :users, only: [:show, :edit]
+  #親子関係 ネストする
+  resources :post_images, only: [:new, :create, :index, :show, :destroy] do
+    resource :favorites, only: [:create, :destroy] # resource(単数)だとURLにidが入らない
+    resources :post_comments, only: [:create, :destroy]
+  end
   
+  resources :users, only: [:show, :edit, :update]
 end
