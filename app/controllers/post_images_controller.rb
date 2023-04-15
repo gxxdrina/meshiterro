@@ -9,11 +9,15 @@ class PostImagesController < ApplicationController
     #@post_image(投稿データ)のuser_idとcurrent_user.id(ログイン中ユーザーのID)を紐づけ
     @post_image.user_id = current_user.id 
     @post_image.save
-    redirect_to post_images_path #投稿一覧画面
+    if @post_image.save #バリデーションの結果を検出
+      redirect_to post_images_path #投稿一覧画面
+    else
+      render :new
+    end
   end
 
   def index
-    @post_images = PostImage.all
+    @post_images = PostImage.page(params[:page])
   end
 
   def show

@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+#ログイン認証が済んでいない場合はTOP画面のみ表示可
+before_action :authenticate_user!, except: [:top]
 before_action :configure_permitted_parameters, if: :devise_controller?
 
   #サインインしたら投稿一覧へ

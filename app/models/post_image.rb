@@ -7,6 +7,10 @@ class PostImage < ApplicationRecord
   
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  
+  #バリデーションの設定
+  validates :shop_name, presence: true
+  validates :image, presence: true
    
   def get_image
     unless image.attached? #画像設定ない時、no_image.jpgという画像をActiveStorageに格納し表示する
